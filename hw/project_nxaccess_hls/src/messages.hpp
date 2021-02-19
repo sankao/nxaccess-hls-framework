@@ -6,7 +6,7 @@
 //--! Author:                Raphael Charolois (raphael.charolois@enyx.com)
 //--!
 //--! © Copyright            Enyx 2019
-//--! © Copyright Notice:    The source code for this program is not published or otherwise divested of its trade secrets, 
+//--! © Copyright Notice:    The source code for this program is not published or otherwise divested of its trade secrets,
 //--!                        irrespective of what has been deposited with the U.S. Copyright Office.
 //--------------------------------------------------------------------------------
 
@@ -23,9 +23,6 @@ namespace nxaccess_hw_algo {
 
 
 /// Complete message layout to configure an instrument trigger, for CPU->FPGA comm
-#ifdef ENYX_NO_HLS_SUPPORT // do not use #pragma pack() with Vivado
-    #pragma pack(1)
-#endif
 struct user_dma_update_instrument_configuration {
     // word 1
     struct enyx::oe::hwstrat::cpu2fpga_header header; // 64 bits
@@ -53,9 +50,6 @@ struct user_dma_update_instrument_configuration {
 
 
 /// Complete message layout to configure an instrument trigger, for FPGA->CPU comm
-#ifdef ENYX_NO_HLS_SUPPORT // do not use #pragma pack() with Vivado
-    #pragma pack(1)
-#endif
 struct user_dma_update_instrument_configuration_ack {
     //16B
     struct enyx::oe::hwstrat::fpga2cpu_header header; //version == 1, msgtype == 1, length ==
@@ -82,21 +76,18 @@ struct user_dma_update_instrument_configuration_ack {
 
 
 /// Complete message layout to configure an instrument trigger, for FPGA->CPU comm
-#ifdef ENYX_NO_HLS_SUPPORT // do not use #pragma pack() with Vivado
-    #pragma pack(1)
-#endif
 struct user_dma_tick2cancel_notification {
-    //16B 
+    //16B
     struct enyx::oe::hwstrat::fpga2cpu_header header; //version == 1, msgtype == 1, length ==
     uint64_t trade_summary_price; // price that triggered the send
     //16B
     uint64_t book_top_level_price; // book top level price
-    uint64_t threshold; // algo threshold    
+    uint64_t threshold; // algo threshold
     // 16B
     uint32_t instrument_id; /// instrument id to trigger on
     uint16_t sent_collection_id; // triggered collection id
     uint8_t is_bid; /// Whether the configuration fot this instrument is enabled or not.
-    char padding[9]; // pad to ensure 128b 
+    char padding[9]; // pad to ensure 128b
 };
 #  if __GNUC_MAJOR__ >= 5  // introduced with C++11 standard
   static_assert(48 == sizeof(user_dma_update_instrument_configuration_ack), "Size of user_dma_update_instrument_configuration is invalid");
@@ -107,11 +98,8 @@ struct user_dma_tick2cancel_notification {
 # endif
 
 /// Complete message layout to configure an instrument trigger, for FPGA->CPU comm
-#ifdef ENYX_NO_HLS_SUPPORT // do not use #pragma pack() with Vivado
-    #pragma pack(1)
-#endif
 struct user_dma_tcp_consumer_notification {
-    //16B 
+    //16B
     struct enyx::oe::hwstrat::fpga2cpu_header header; // 8 bytes
     uint32_t words; // length of ingress data packet in whole words
     uint32_t bytes; // length of ingress data packet in bytes
@@ -119,7 +107,7 @@ struct user_dma_tcp_consumer_notification {
     uint16_t keep; // selected bytes on last word
     uint16_t user; // user value on last word
     uint16_t session;
-    char padding[12]; // pad to ensure 128b 
+    char padding[10]; // pad to ensure 128b
 };
 #  if __GNUC_MAJOR__ >= 5  // introduced with C++11 standard
   static_assert(48 == sizeof(user_dma_update_instrument_configuration_ack), "Size of user_dma_update_instrument_configuration is invalid");
@@ -131,9 +119,6 @@ struct user_dma_tcp_consumer_notification {
 
 
 /// Complete message layout to configure an instrument trigger, for CPU2FPGA comm
-#ifdef ENYX_NO_HLS_SUPPORT // do not use #pragma pack() with Vivado
-    #pragma pack(1)
-#endif
 struct user_dma_tick2trade_notification {
     //16B
     struct enyx::oe::hwstrat::fpga2cpu_header header; //version == 1, msgtype == 1, length ==
@@ -141,7 +126,7 @@ struct user_dma_tick2trade_notification {
     //16B
     uint64_t threshold_price; // threshold for algo
     uint32_t instrument_id; /// instrument id to trigger on
-    uint16_t sent_collection_id; // triggered collection id  
+    uint16_t sent_collection_id; // triggered collection id
     uint8_t is_bid; /// Whether the configuration fot this instrument is enabled or not.
     char padding[1]; //ensure aligned on 128bits words
 

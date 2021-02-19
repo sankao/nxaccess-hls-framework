@@ -108,10 +108,10 @@ TcpConsumer::p_consume_tcp(
             notification.bytes = bytes;
             notification.keep = tcp_reply_word.keep;
             notification.user = tcp_reply_word.user;
-            notification.session = session; 
+            notification.session = session;
             tcp_consumer_notification_out.write(notification); // write to the internal notification data bus
         }
-        
+
         words = 0;
         bytes = 0;
     } else {
@@ -124,7 +124,7 @@ enyx::hfp::dma_user_channel_data_out
 TcpConsumer::notification_to_word(const user_dma_tcp_consumer_notification& notif_in, int word_index)
 {
     enyx::hfp::dma_user_channel_data_out out_word;
-    
+
     switch(word_index) {
         case 1: {
             out_word.data(127, 64) =  enyx::oe::hwstrat::get_word(notif_in.header); //64
@@ -134,15 +134,15 @@ TcpConsumer::notification_to_word(const user_dma_tcp_consumer_notification& noti
             break;
         }
         case 2: {
-            out_word.data(128-1, 102)=  notif_in.keep;
-            out_word.data(102-1, 96) = notif_in.user;
-            out_word.data(96-1, 80) = notif_in.session; 
+            out_word.data(128-1, 112)=  notif_in.keep;
+            out_word.data(112-1, 96) = notif_in.user;
+            out_word.data(96-1, 80) = notif_in.session;
             out_word.last = 1;
             break;
         }
         default:
             assert(false && "Handling only 2 words for user_dma_tcp_consumer_notification encoding");
-  
+
     }
     return out_word;
 }
