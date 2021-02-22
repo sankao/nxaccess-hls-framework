@@ -70,8 +70,8 @@ TcpConsumer::p_consume_tcp(
     }
 
     bool end_of_packet = tcp_reply_word.last;
-    if (end_of_packet) {
-        bytes += bitCount(tcp_reply_word.keep);
+    // if (end_of_packet) {
+    //     bytes += bitCount(tcp_reply_word.keep);
 
         std::cout << "[tcp_comsumer] " << std::dec
             << "id: " << tcp_reply_word.id << ", "
@@ -114,10 +114,10 @@ TcpConsumer::p_consume_tcp(
 
         words = 0;
         bytes = 0;
-    } else {
-        words++;
-        bytes += enyx::oe::hwstrat::tcp_reply_payload::data_width / 8;
-    }
+    // } else {
+    //     words++;
+    //     bytes += enyx::oe::hwstrat::tcp_reply_payload::data_width / 8;
+    // }
 }
 
 enyx::hfp::dma_user_channel_data_out
